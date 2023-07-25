@@ -88,7 +88,6 @@ while(true)
 
     [W, localobj] = solveLocalMaximization(A, signpatterns);
  
-  %  fun_obj(iter) = sum(sum(A.*full(W),1),2);
     W0_norm = zeros(k,1);
     for i = 1:k
         W0_norm(i) = length(find(W(:,i)));
@@ -99,13 +98,6 @@ while(true)
         optZ = Z;
         iter
     end
-% 
-%      if (fun_obj(iter) > fun_obj_opt) & rank(full(W)) > 1
-%         fun_obj_opt = fun_obj(iter);
-%         optW = W;
-%         iter
-%     end
-    
 end
 
 W = optW;
@@ -120,10 +112,6 @@ function [W, localobj] = solveLocalMaximization(A, patterns)
     [m, k] = size(A);
     
     B = A;
- %   for p = 1:size(patterns, 1)
- %       B = bsxfun(@times, A, patterns(p, :));
- %       B(B<0) = 0;
-    
         [selEntryVals, colAssignment] = max(B, [], 2);
         
         % Compute the objective that will be achieved by the best W for
@@ -159,14 +147,9 @@ end
 
 function [ C ] = sphereCartesianSample(dim, pow, Zm,iter)
     
- %   C = randl(dim, pow);
- %   C = C * diag(sum(C.^2, 1).^-0.5); % original
- %   C = C * diag(1./sum(abs(C), 1));
-
     alpha = max(.1,1 - tanh(iter));
     Cm = randl(dim, pow);
     C = Zm + alpha*Cm;
-   % C = C * diag(1./sum(abs(C), 1));
     C = C * diag(sum(C.^2, 1).^-0.5);
 
 end
