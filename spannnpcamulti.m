@@ -96,7 +96,6 @@ while(true)
         optval = localobj;
         optW = W;
         optZ = Z;
-        iter
     end
 end
 
